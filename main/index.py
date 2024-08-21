@@ -27,12 +27,16 @@ screen = pygame.display.set_mode((W,H))
 
 #init player from Player class
 player = Player()
+base_enemy = Enemy()
 
 #create sprite group
 spriteGroup1 = pygame.sprite.Group()
 
 #add player to sprite group
 spriteGroup1.add(player)
+spriteGroup1.add(base_enemy)
+
+
  
 # Game loop
 while True:
