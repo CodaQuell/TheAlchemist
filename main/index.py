@@ -1,12 +1,15 @@
 #3rd party libaries import
 import sys
-import pygame
-import random
 
+import pygame
 from pygame.locals import *
+
+import random
 from random import *
 
-#initialising pygame
+from classes.playerClass import Player
+
+#init pygame
 pygame.init()
 
 #geting tick rate for the game time
@@ -17,20 +20,36 @@ fpsClock = pygame.time.Clock()
 W = 1920
 H = 1080
 screen = pygame.display.set_mode((W,H))
+
+#init player from Player class
+player = Player()
+
+#create sprite group
+spriteGroup1 = pygame.sprite.Group()
+
+#add player to sprite group
+spriteGroup1.add(player)
  
-# Game loop.
+# Game loop
 while True:
   screen.fill((0, 0, 0))
   
   for event in pygame.event.get():
 
-    #makes it so you can iether press esc or the x button to quit
+    #makes it so you can either press esc or the x button to quit
     if event.type == QUIT or event.type == KEYDOWN:
       #press esc to exit pygame
       if event.key == K_ESCAPE:
 
         pygame.quit()
         sys.exit()
+
+  keys = pygame.key.get_pressed()
+  for sprite in spriteGroup1:
+      sprite.update(keys)
+
+  for sprite in spriteGroup1:
+      screen.blit(sprite.surface,sprite.rect)
   
 
   #updates the screen ever 60 ticks. This is set in fpsClock
