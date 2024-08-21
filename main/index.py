@@ -10,6 +10,9 @@ from random import *
 from classes.playerClass import Player
 from classes.enemyClass import Enemy
 
+from win32api import GetSystemMetrics
+
+
 #init pygame
 pygame.init()
 
@@ -18,8 +21,8 @@ fps = 60
 fpsClock = pygame.time.Clock()
  
 #getting height and width for the game window, should fullscreen on *most monitors
-W = 1920
-H = 1080
+W = GetSystemMetrics(0)
+H = GetSystemMetrics(1)
 screen = pygame.display.set_mode((W,H))
 
 #init player from Player class
