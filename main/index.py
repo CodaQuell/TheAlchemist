@@ -8,6 +8,7 @@ import random
 from random import *
 
 from classes.playerClass import Player
+from classes.enemyClass import Enemy
 
 #init pygame
 pygame.init()
@@ -55,3 +56,4 @@ while True:
   #updates the screen ever 60 ticks. This is set in fpsClock
   pygame.display.update()
   fpsClock.tick(fps)
+
