@@ -23,3 +23,5 @@ class Player(pygame.sprite.Sprite):
         if keys_pressed[K_d] or keys_pressed[K_RIGHT]:
             self.rect.x += self.speed
 
+    
+
