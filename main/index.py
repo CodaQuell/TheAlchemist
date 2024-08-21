@@ -9,6 +9,7 @@ from random import *
 
 from classes.playerClass import Player
 from classes.enemyClass import Enemy
+from classes.wallClass import Wall
 
 from win32api import GetSystemMetrics
 
@@ -20,21 +21,21 @@ pygame.init()
 fps = 60
 fpsClock = pygame.time.Clock()
  
-#getting height and width for the game window, should fullscreen on *most monitors
+#getting height and width for the game window
 W = GetSystemMetrics(0)
 H = GetSystemMetrics(1)
 screen = pygame.display.set_mode((W,H))
 
 #init player from Player class
 player = Player()
-base_enemy = Enemy()
+wall = Wall((randint(20,GetSystemMetrics(0)),randint(20,GetSystemMetrics(1))))
 
 #create sprite group
 spriteGroup1 = pygame.sprite.Group()
 
 #add player to sprite group
 spriteGroup1.add(player)
-spriteGroup1.add(base_enemy)
+spriteGroup1.add(wall)
 
 
  

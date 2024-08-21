@@ -1,5 +1,8 @@
 import pygame
+from pygame.locals import *
+
 import random
+from random import *
 
 class Enemy (pygame.sprite.Sprite):
     def __intit__(self,health,damage,speed,spec_damage,exp,gold):
