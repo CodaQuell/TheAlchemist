@@ -13,7 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.center = [300,300]
         self.speed = 3
 
-    def update(self, keys_pressed):
+    def update(self, keys_pressed,lootdrop, gold, exp):
         if keys_pressed[K_w] or keys_pressed[K_UP]:
             self.rect.y -= self.speed
         if keys_pressed[K_s] or keys_pressed[K_DOWN]:
