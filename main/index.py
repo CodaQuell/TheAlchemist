@@ -10,7 +10,10 @@ from random import *
 from classes.playerClass import Player
 from classes.enemyClass import Enemy 
 from classes.enemyClass import *
+from classes.sheepClass import * 
 from classes.wallClass import Wall
+
+
 
 from win32api import GetSystemMetrics
 
@@ -21,16 +24,20 @@ pygame.init()
 #geting tick rate for the game time
 fps = 60
 fpsClock = pygame.time.Clock()
-frames = 0
+
 #getting height and width for the game window
 W = GetSystemMetrics(0)
 H = GetSystemMetrics(1)
+print(W,H)
 screen = pygame.display.set_mode((W,H))
 
 #init player from Player class
-player = Player()
+player = Player(H,W)
 enemy = Enemy(20,2,3,0,60,34)
+sheep = Sheep(5,2)
 wall = Wall((randint(20,GetSystemMetrics(0)),randint(20,GetSystemMetrics(1))))
+
+
 
 #create sprite group
 spriteGroup1 = pygame.sprite.Group()
@@ -39,12 +46,14 @@ spriteGroup2= pygame.sprite.Group()
 spriteGroup1.add(player)
 spriteGroup1.add(wall)
 spriteGroup1.add(enemy)
+spriteGroup1.add(sheep)
 spriteGroup2.add(enemy)
+spriteGroup2.add(sheep)
  
 # Game loop
 while True:
   screen.fill((0, 0, 0))
-  enemy1 = Enemy(1,1,1,0,5,1)
+  
   
   for event in pygame.event.get():
 
@@ -57,21 +66,21 @@ while True:
         sys.exit()
     
        
-
+# updating the game when keystrokes are initiated
   keys = pygame.key.get_pressed()
   for sprite in spriteGroup1:
-    for enemy in spriteGroup2:
-
-      sprite.update(keys, enemy.lootdrop, enemy.gold, enemy.exp)
+    sprite.update(keys)
 
   for sprite in spriteGroup1:
       screen.blit(sprite.surface,sprite.rect)
+
       # sets up for colliding with any enemy
       #runs the loot function from enemy class
   for en in spriteGroup2:
     if pygame.sprite.collide_rect(player,en):
-       en.lootdrop(6,60,1, frames)
-  frames +=1
+       en.health -= 1
+       
+
   #updates the screen ever 60 ticks. This is set in fpsClock
   pygame.display.update()
   fpsClock.tick(fps)

@@ -19,22 +19,21 @@ class Enemy (pygame.sprite.Sprite):
         self.exp = exp
         self.gold = gold
 
-    def lootdrop(self,keys,gold,exp,frames):
+    def lootdrop(self,gold,exp):
         gold = randint((gold-5),(gold+5))
         exp = randint((exp-50),(exp+50))
         drops = (gold, exp) 
-        if frames == 1:
+        print(drops)
+        
+        
+        
+        
 
-            print (drops)
         
-        
-        
-
-        
-    def update(self,keys,lootdrop,gold,exp):
-        if self.health >= 0:
-            self.kill
-            lootdrop(self,gold,exp,-1)
+    def update(self,keys):
+        if self.health <= 0:
+            self.lootdrop(self.gold, self.exp)
+            self.kill()
             #if we decide to do a loot system, make a "drop loot" function and run it here
 
 
