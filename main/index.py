@@ -28,20 +28,26 @@ fpsClock = pygame.time.Clock()
 #getting height and width for the game window
 W = GetSystemMetrics(0)
 H = GetSystemMetrics(1)
-print(W,H)
+
+#Need this to run at home, win32api is only accessible at school
+#W = 800
+#H = 600
+#print(W,H)
 screen = pygame.display.set_mode((W,H))
 
 #init player from Player class
 player = Player(H,W)
 enemy = Enemy(20,2,3,0,60,34)
 sheep = Sheep(5,2)
-wall = Wall((randint(20,GetSystemMetrics(0)),randint(20,GetSystemMetrics(1))))
 
+wall = Wall((randint(20,GetSystemMetrics(0)),randint(20,GetSystemMetrics(1))))
+#wall = Wall((randint(20,H),randint(20,W)))
 
 
 #create sprite group
 spriteGroup1 = pygame.sprite.Group()
 spriteGroup2= pygame.sprite.Group()
+spriteGroup3 = pygame.sprite.Group()
 #add player to sprite group
 spriteGroup1.add(player)
 spriteGroup1.add(wall)
@@ -49,7 +55,9 @@ spriteGroup1.add(enemy)
 spriteGroup1.add(sheep)
 spriteGroup2.add(enemy)
 spriteGroup2.add(sheep)
- 
+spriteGroup3.add(wall)
+
+tempPlayerPos = player.rect.center
 # Game loop
 while True:
   screen.fill((0, 0, 0))
@@ -70,6 +78,16 @@ while True:
   keys = pygame.key.get_pressed()
   for sprite in spriteGroup1:
     sprite.update(keys)
+   
+   # checking for a wall collide, then stopping the player if there is
+  wallTouch = False    
+  for wall in spriteGroup3:
+    if pygame.sprite.collide_rect(player,wall):
+      wallTouch = True
+  if wallTouch:
+    player.rect.center = tempPlayerPos
+  else:
+    tempPlayerPos = player.rect.center
 
   for sprite in spriteGroup1:
       screen.blit(sprite.surface,sprite.rect)
@@ -81,7 +99,7 @@ while True:
        en.health -= 1
        
 
+
   #updates the screen ever 60 ticks. This is set in fpsClock
   pygame.display.update()
   fpsClock.tick(fps)
-
