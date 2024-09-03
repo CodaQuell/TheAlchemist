@@ -1,8 +1,10 @@
 #3rd party libaries import
 import sys
+import tkinter
 
 import pygame
 from pygame.locals import *
+
 
 import random
 from random import *
@@ -14,8 +16,12 @@ from classes.sheepClass import *
 from classes.wallClass import Wall
 
 
+# getting height and width for the game window
+# an included module, hopefully school computers have it.
+app = tkinter.Tk()
+W = app.winfo_screenwidth()
+H = app.winfo_screenheight()
 
-from win32api import GetSystemMetrics
 
 
 #init pygame
@@ -25,30 +31,29 @@ pygame.init()
 fps = 60
 fpsClock = pygame.time.Clock()
 
-#getting height and width for the game window
-W = GetSystemMetrics(0)
-H = GetSystemMetrics(1)
 
-#Need this to run at home, win32api is only accessible at school
-#W = 800
-#H = 600
-#print(W,H)
+
+
+
+
 screen = pygame.display.set_mode((W,H))
+
+
+
 
 #init player from Player class
 player = Player(H,W)
 enemy = Enemy(20,2,3,0,60,34)
 sheep = Sheep(5,2)
-
-wall = Wall((randint(20,GetSystemMetrics(0)),randint(20,GetSystemMetrics(1))))
-#wall = Wall((randint(20,H),randint(20,W)))
+wall = Wall((randint(20,H),randint(20,W)))
 
 
 #create sprite group
 spriteGroup1 = pygame.sprite.Group()
 spriteGroup2= pygame.sprite.Group()
 spriteGroup3 = pygame.sprite.Group()
-#add player to sprite group
+
+#add player+others to respective sprite groups to sprite group
 spriteGroup1.add(player)
 spriteGroup1.add(wall)
 spriteGroup1.add(enemy)
@@ -57,7 +62,10 @@ spriteGroup2.add(enemy)
 spriteGroup2.add(sheep)
 spriteGroup3.add(wall)
 
+# a neccessary variable for collision checking
 tempPlayerPos = player.rect.center
+
+
 # Game loop
 while True:
   screen.fill((0, 0, 0))
