@@ -29,7 +29,8 @@ from classes.enemyClass import *
 from classes.sheepClass import * 
 from classes.wallClass import Wall
 from functions.backgound import background
-from functions.backgound import image_path
+from functions.backgound import current_image
+from functions.backgound import next_image
 
 # getting height and width for the game window
 # an included module, hopefully school computers have it.
@@ -61,12 +62,17 @@ spriteGroup2= pygame.sprite.Group()
 spriteGroup3 = pygame.sprite.Group()
 
 #add player+others to respective sprite groups to sprite group
+#must be in sprite group1 to be drawn onto screen
 spriteGroup1.add(player)
 spriteGroup1.add(wall)
 spriteGroup1.add(enemy)
 spriteGroup1.add(sheep)
+
+#non playerable entites, animals or monsters
 spriteGroup2.add(enemy)
 spriteGroup2.add(sheep)
+
+#sprite group 3 will be for walls or solid objects
 spriteGroup3.add(wall)
 
 #stores players location on x,y plane, used to set position apon collision 
@@ -75,7 +81,7 @@ tempPlayerPos = player.rect.center
 # Game loop
 while True:
   #gets selected background image from background func
-  background(image_path,W,H,screen)
+  background(current_image,W,H,screen)
   
   #checks for esc key pressed to exit game
   for event in pygame.event.get():
@@ -113,6 +119,8 @@ while True:
   for en in spriteGroup2:
     if pygame.sprite.collide_rect(player,en):
        en.health -= 1
+       next_image(current_image,W,H,screen)
+
        
   #updates the screen ever 60 ticks. This is set in fpsClock
   pygame.display.update()
