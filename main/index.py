@@ -16,7 +16,7 @@ ideas for future:
 
 #3rd party libaries import
 import sys
-import tkinter
+#import tkinter
 import pygame
 from pygame.locals import *
 import random
@@ -34,15 +34,18 @@ from functions.backgound import next_image
 
 # getting height and width for the game window
 # an included module, hopefully school computers have it.
-app = tkinter.Tk()
-W = app.winfo_screenwidth()
-H = app.winfo_screenheight()
+#app = tkinter.Tk()
+#W = app.winfo_screenwidth()
+#H = app.winfo_screenheight()
+W = 2560
+H = 1440
+
 
 #init pygame
 pygame.init()
 
 #geting tick rate for the game time
-fps = 60
+fps = 30
 fpsClock = pygame.time.Clock()
 
 #inits the sceen with the the H and W defined earlier
@@ -94,6 +97,8 @@ while True:
         pygame.quit()
         sys.exit()
     
+
+    player.attack(0)
 # updating the game when keystrokes are initiated
   keys = pygame.key.get_pressed()
   for sprite in spriteGroup1:
@@ -119,7 +124,7 @@ while True:
   for en in spriteGroup2:
     if pygame.sprite.collide_rect(player,en):
        en.health -= 1
-       next_image(current_image,W,H,screen)
+       #next_image(current_image,W,H,screen)
 
        
   #updates the screen ever 60 ticks. This is set in fpsClock
