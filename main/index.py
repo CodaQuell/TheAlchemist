@@ -103,10 +103,10 @@ def level2():
   wallbottom = Wall((20,H-20),W*2,40)
   wallright1 = Wall((W-20,20),40,H-80)
   wallright2 = Wall((W-20,H),40,H-40)
-  sheep = Sheep(5,2)
+  sheep = Sheep(2,0,(300,600))
 
 
-  #all playes/entitiesd
+  #all playes/entities
   spriteGroup1.add(upLevelPoint)
   spriteGroup1.add(downLevelPoint)
   spriteGroup1.add(player)
@@ -135,6 +135,51 @@ def level2():
   spriteGroup5.add(wallright2)
   spriteGroup5.add(sheep)
   spriteGroup5.add(upLevelPoint)
+  spriteGroup5.add(downLevelPoint)
+
+def level3():
+  
+
+  #entry points
+  downLevelPoint = newLevel((20,540),0)
+
+  walltop = Wall((20,20),W*2,40)
+  wallbottom = Wall((20,H-20),W*2,40)
+  wallright1 = Wall((W-20,20),40,H-80)
+  wallright2 = Wall((W-20,H),40,H-40)
+  sheep1 = Sheep(2,0,(600,600))
+  sheep2 = Sheep(2,0,(700,100))
+
+
+  #all playes/entities
+  spriteGroup1.add(downLevelPoint)
+  spriteGroup1.add(player)
+  spriteGroup1.add(sheep1)
+  spriteGroup1.add(sheep2)
+
+  #all enemies
+  spriteGroup2.add(sheep1)
+  spriteGroup2.add(sheep2)
+
+
+
+  #walls or solid blocks
+  spriteGroup3.add(walltop)
+  spriteGroup3.add(wallbottom)
+  #spriteGroup3.add(wallleft)
+  spriteGroup3.add(wallright1)
+  spriteGroup3.add(wallright2)
+
+
+  #entry/exit points
+  spriteGroup4.add(downLevelPoint)
+
+  spriteGroup5.add(walltop)
+  spriteGroup5.add(wallbottom)
+  spriteGroup5.add(wallright1)
+  spriteGroup5.add(wallright2)
+  spriteGroup5.add(sheep1)
+  spriteGroup5.add(sheep2)
   spriteGroup5.add(downLevelPoint)
 
 
@@ -206,6 +251,8 @@ while True:
           level1()
         elif level == 2:
           level2()
+        elif level == 3:
+          level3()
         
         
       elif lvl.num == 0:
@@ -217,6 +264,8 @@ while True:
           level1()
         elif level == 2:
           level2()
+        elif level == 3:
+          level3()
        
   #updates the screen ever 60 ticks. This is set in fpsClock
   pygame.display.update()
