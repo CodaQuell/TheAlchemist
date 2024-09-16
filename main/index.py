@@ -1,5 +1,6 @@
 
 
+
 #3rd party libaries import
 import sys
 import tkinter
@@ -7,14 +8,16 @@ import pygame
 from pygame.locals import *
 import random
 from random import *
+import time
 
 #import classs, funcs, and assets to the index
-from classes.playerClass import Player
+from classes.playerClass import *
 from classes.enemyClass import Enemy 
 from classes.enemyClass import *
 from classes.sheepClass import * 
 from classes.wallClass import Wall
 from classes.newLevelClass import newLevel
+
 
 
 from functions.backgound import background
@@ -42,6 +45,8 @@ screen = pygame.display.set_mode((W,H))
 #init player from Player class
 player = Player(H,W)
 
+
+
 #create sprite group
 #everything must be in sprite group 1 to get drawn
 spriteGroup1 = pygame.sprite.Group()
@@ -53,6 +58,8 @@ spriteGroup3 = pygame.sprite.Group()
 spriteGroup4 = pygame.sprite.Group()
 #everything but player, used for enitiy kill function
 spriteGroup5 = pygame.sprite.Group()
+#collision boxes for player's attack
+spriteGroup6 = pygame.sprite.Group()
 
 
 
@@ -182,6 +189,8 @@ def level3():
   spriteGroup5.add(sheep2)
   spriteGroup5.add(downLevelPoint)
 
+  
+
 
 #kills all enities thta are in sprite group 5, should be everything but player
 def entityKill():
@@ -194,11 +203,14 @@ level1()
 #stores players location on x,y plane, used to set position apon collision 
 tempPlayerPos = player.rect.center
 
+tempDur = .2
+
 # Game loop
 while True:
   #gets selected background image from background func
   background(current_image,W,H,screen)
 
+  
   
   #checks for esc key pressed to exit game
   for event in pygame.event.get():
@@ -210,11 +222,17 @@ while True:
 
         pygame.quit()
         sys.exit()
+    if event.type == MOUSEBUTTONDOWN:
+      playercollider = Collider(tempDur,tempPlayerPos)
+      spriteGroup1.add (playercollider)
+      
     
 # updating the game when keystrokes are initiated
   keys = pygame.key.get_pressed()
   for sprite in spriteGroup1:
     sprite.update(keys)
+
+  
    
   # checking for a wall collide, then stopping the player if there is
   wallTouch = False    
