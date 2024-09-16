@@ -14,3 +14,7 @@ class Sheep(pygame.sprite.Sprite):
         self.rect = self.surface.get_rect()
         self.surface.fill ("green")
         self.rect.center = center
+
+    def update(self,keys):
+        if self.health <= 0:
+            self.kill()
