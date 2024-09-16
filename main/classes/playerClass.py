@@ -13,7 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.surface.get_rect()
         self.surface.fill ("white")
         self.rect.center = [300,300]
-        self.speed = 3
+        self.speed = 10
         self.screenH = screenH
         self.screenW = screenW
 

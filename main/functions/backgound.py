@@ -15,7 +15,10 @@ screen = pygame.display.set_mode((W,H))
 image_list=[]
 current_image = 0
 image_list.append("C:\\Users\\josso\Downloads\\tower-game-main\\tower-game-main\\main\\assets\\background0.png")
-image_list.append("C:\\Users\\josso\Downloads\\tower-game-main\\tower-game-main\\main\\assets\\backgound1.png")
+image_list.append("C:\\Users\\josso\Downloads\\tower-game-main\\tower-game-main\\main\\assets\\background1.png")
+image_list.append("C:\\Users\\josso\Downloads\\tower-game-main\\tower-game-main\\main\\assets\\background2.png")
+
+
 #loads selected image from image path
 def background(image,W,H,screen):
     #loads the image
@@ -25,9 +28,18 @@ def background(image,W,H,screen):
     #draws the the screen
     screen.blit(scaled_image, (0, 0))
 
+#moves to next image in list
 def next_image(image,W,H,screen):
     global current_image
+    #gets len of list and moves to next image
     if len(image_list)>current_image+1:
         current_image +=1
+    background(image,W,H,screen)
+
+#does the same as next image, but back 1 in the list
+def prev_image(image,W,H,screen):
+    global current_image
+    if len(image_list)>current_image:
+        current_image -=1
     background(image,W,H,screen)
 
