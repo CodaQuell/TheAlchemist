@@ -3,6 +3,26 @@ import pygame
 from pygame.locals import *
 import random
 from random import *
+import time
+
+
+class Collider(pygame.sprite.Sprite):
+    def __init__ (self,duration,playerpos):
+        super(Collider,self).__init__()
+        self.surface = pygame.Surface([10,10]) 
+        self.start = time.time()
+        self.duration = duration
+        self.rect = self.surface.get_rect()
+        self.rect.centery = playerpos[1]
+        self.rect.centerx = playerpos[0]
+        self.surface.fill ("green")
+    
+    def update(self, *args):
+        if time.time()-self.start >self.duration:
+            self.kill()
+
+        
+
 
 #inits playerclass
 class Player(pygame.sprite.Sprite):
@@ -37,6 +57,5 @@ class Player(pygame.sprite.Sprite):
             self.rect.left = 0
         if self.rect.right > self.screenW:
             self.rect.right = self.screenW        
-
             
 
