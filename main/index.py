@@ -1,5 +1,5 @@
 
-"THIS DOES NOT WORK YET"
+
 
 #3rd party libaries import
 import sys
@@ -58,6 +58,11 @@ level1()
 tempPlayerPos = player.rect.center
 
 
+enemy = Enemy(4,1,2,0,31,5)
+spriteGroup2.add (enemy)
+screen.blit (enemy.surface,enemy.rect.center)
+
+
 
 # Game loop
 while True:
@@ -82,33 +87,32 @@ while True:
      
     tempDur = .3    
     if event.type == MOUSEBUTTONDOWN:
-      playercollider_left = Collider(tempDur,player.rect.left,player.rect.centery,20,10)
-      playercollider_right = Collider(tempDur,player.rect.right,player.rect.centery,40,10)
-      playercollider_up = Collider(tempDur,player.rect.centerx,player.rect.top,10,20)
-      playercollider_down = Collider(tempDur,player.rect.centerx,player.rect.bottom,10,40)
+     #Colliders are placed along the player's edges
+      playercollider_left = Collider(tempDur, player.rect.left - 20, player.rect.centery - 5, 20, 10)
+      playercollider_right = Collider(tempDur, player.rect.right, player.rect.centery - 5, 20, 10)
+      playercollider_up = Collider(tempDur, player.rect.centerx - 5, player.rect.top - 20, 10, 20)
+      playercollider_down = Collider(tempDur, player.rect.centerx - 5, player.rect.bottom, 10, 20)
 
       tempMouse = pygame.mouse.get_pos()
-      degrees_x = tempMouse[0] - tempPlayerPos[0]
-      degrees_y = tempMouse[1] - tempPlayerPos[1]
+      dx = tempMouse[0] - tempPlayerPos[0]
+      dy = tempMouse[1] - tempPlayerPos[1]
 
-      # Calculate the angle in radians
-      angle_radians = math.atan2(degrees_x, degrees_y)
-
-      # convert to degrees
+      # Calculate the angle in radians, and convert to degrees
+      angle_radians = math.atan2(dy, dx)
       angle_degrees = math.degrees(angle_radians)
 
+      # Spawn the collider based on the angle direction
       if -45 < angle_degrees < 45:
-        spriteGroup1.add (playercollider_down)
+          spriteGroup1.add(playercollider_right)
+      elif 45 <= angle_degrees <= 135:
+          spriteGroup1.add(playercollider_down)
+      elif angle_degrees < -45 and angle_degrees > -135:
+          spriteGroup1.add(playercollider_up)
+      else:
+          spriteGroup1.add(playercollider_left)
 
-      if 45 < angle_degrees < 135:
-        spriteGroup1.add (playercollider_right)
 
-      
-      if 135 < angle_degrees and angle_degrees < -135:
-        spriteGroup1.add (playercollider_up)
-
-      if -135 < angle_degrees and angle_degrees > -45:
-        spriteGroup1.add (playercollider_left)
+          
         
         
 
@@ -140,8 +144,10 @@ while True:
       # sets up for colliding with any enemy
       #runs the loot function from enemy class
   for en in spriteGroup2:
-    if pygame.sprite.collide_rect(player,en):
-       en.health -= 1
+    for hb in spriteGroup1:
+       if pygame.sprite.collide_rect(hb,en,):
+          en.health -= 1
+          print("wow")
        #next_image(current_image,W,H,screen)
 
   #adds collition with newLevel objects, calles enitiy kill func, loads new level enities
@@ -172,7 +178,7 @@ while True:
           level2()
         elif level == 3:
           level3()
-       
+  screen.blit (enemy.surface,enemy.rect.center)
   #updates the screen ever 60 ticks. This is set in fpsClock
   pygame.display.update()
   fpsClock.tick(fps)
