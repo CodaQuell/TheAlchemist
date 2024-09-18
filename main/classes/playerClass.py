@@ -7,21 +7,21 @@ import time
 
 
 class Collider(pygame.sprite.Sprite):
-    def __init__(self,duration, x,y, width, height):
+    def __init__(self, duration, x, y, width, height):
         super(Collider, self).__init__()
         self.surface = pygame.Surface([width, height])
         self.start = time.time()
         self.duration = duration
         self.rect = self.surface.get_rect()
-        self.x = x
-        self.y = y
-        
-    
-        self.surface.fill ("green")
 
+        # Set the rect position using x and y
+        self.rect.topleft = (x, y)
+
+        # Set the color (green)
+        self.surface.fill("green")
     
     def update(self, *args):
-        if time.time()-self.start >self.duration:
+        if time.time() - self.start > self.duration:
             self.kill()
 
         
