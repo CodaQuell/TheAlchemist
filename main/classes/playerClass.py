@@ -1,0 +1,66 @@
+#imports 3rd part libs
+import pygame
+from pygame.locals import *
+import random
+from random import *
+import time
+
+
+class Collider(pygame.sprite.Sprite):
+    def __init__(self, duration, x, y, width, height):
+        super(Collider, self).__init__()
+        self.surface = pygame.Surface([width, height])
+        self.start = time.time()
+        self.duration = duration
+        self.rect = self.surface.get_rect()
+
+        # Set the rect position using x and y
+        self.rect.topleft = (x, y)
+
+        # Set the color (green)
+        self.surface.fill("green")
+    
+    def update(self, *args):
+        if time.time() - self.start > self.duration:
+            self.kill()
+
+        
+
+
+#inits playerclass
+class Player(pygame.sprite.Sprite):
+    def __init__(self,screenH,screenW):
+        super(Player,self).__init__()
+        #sets basic player stats
+        self.health = 20
+        self.surface = pygame.Surface((20,20))
+        self.rect = self.surface.get_rect()
+        self.surface.fill ("green")
+        self.rect.center = [79, 88]
+        self.speed = 2
+        self.screenH = screenH
+        self.screenW = screenW
+        
+
+    #checks if keys are pressed, then moves accoss x,y plane in accouding direction
+    def update(self, keys_pressed):
+        if keys_pressed[K_w] or keys_pressed[K_UP]:
+            self.rect.y -= self.speed
+        if keys_pressed[K_s] or keys_pressed[K_DOWN]:
+            self.rect.y += self.speed
+        if keys_pressed[K_a] or keys_pressed[K_LEFT]:
+            self.rect.x -= self.speed
+        if keys_pressed[K_d] or keys_pressed[K_RIGHT]:
+            self.rect.x += self.speed
+
+        #prevents the player from leaving the confines of the screen
+        if self.rect.bottom > self.screenH:
+            self.rect.bottom = self.screenH
+        if self.rect.top < 0:
+            self.rect.top = 0
+        if self.rect.left < 0:
+            self.rect.left = 0
+        if self.rect.right > self.screenW:
+            self.rect.right = self.screenW        
+            
+
